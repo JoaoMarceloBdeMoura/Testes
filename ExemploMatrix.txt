@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    
+  int qtd = 0,valor = 0,elementos = 0,L,C,vet[2][4];
+
+  printf("Preencha a matriz 2 x 4\n");
+
+  for(L=0;L<2;L++)
+    {
+      for(C=0;C<4;C++)
+        {
+          scanf("%d",&vet[L][C]);
+        }
+    }
+
+  for(L=0;L<2;L++)
+    {
+      for(C=0;C<4;C++)
+        {
+           if (vet[L][C] >=12 && (vet[L][C] <= 20))
+           {
+            qtd++;
+          }   
+          if((vet[L][C]) % 2 == 0)
+          {
+            valor = valor + vet[L][C];
+            elementos++;
+          }
+    }
+      printf("\nQuantidade de números entre 12 e 20 na linha: %d  - %d",L,qtd);
+          qtd = 0;
+      }
+
+    printf("\nA media dos elementos pares da matriz é..: %d",valor/elementos);
+  
+  
+    return 0;
+}
