@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main() {
+
+	int mat [4][3];
+	int vet[3];
+	int l, c, soma =0;
+	// entrada de dados na matriz
+	for (l = 0; l<4; l++)
+	{
+		for (c= 0; c< 3; c++)
+		{
+			printf("Numero..: ");
+			scanf("%d", &mat[l][c]);
+		}
+	}
+	
+	// saída
+	printf("\n\n-----------------------------\n");
+	for (l = 0; l<4; l++)
+	{
+		for (c= 0; c< 3; c++)
+		{
+     	        printf("%d  \t ", mat[l][c]);
+        }
+        printf("\n");
+    }
+    
+    // somatorio das colunas
+    for(c= 0; c< 3; c++)
+    {
+    	for (l=0; l<4 ; l++)
+    	{
+    		soma = soma + mat[l][c];
+    	}
+    	vet[c]= soma;
+    	soma = 0;
+    	
+    }
+    
+    // saída
+	printf("\n\n----------- Vetor ------------------\n");
+    for (c = 0; c<3; c++)
+    {
+    	printf("%d \t ", vet[c]);
+    }
+    
+    //
+    for (l=0; l<4; l++)
+    {
+    	for (c =0 ; c< 3; c++)
+    	{
+    		mat[l][c] = mat[l][c] * vet[c];
+    	}
+    }
+    printf("\n\n---------Matriz Resultande --------------------\n");
+	for (l = 0; l<4; l++)
+	{
+		for (c= 0; c< 3; c++)
+		{
+     	        printf("%d  \t ", mat[l][c]);
+        }
+        printf("\n");
+    }
+return 0;
+}
