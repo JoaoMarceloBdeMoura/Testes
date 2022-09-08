@@ -2,7 +2,7 @@
 
 int main() {
     
-  int qtd = 0,valor = 0,elementos = 0,L,C,vet[2][4];
+  int qtd = 0,valor = 0,elementos = 0,L,C,mat[2][4];
 
   printf("Preencha a matriz 2 x 4\n");
 
@@ -10,7 +10,7 @@ int main() {
     {
       for(C=0;C<4;C++)
         {
-          scanf("%d",&vet[L][C]);
+          scanf("%d",&mat[L][C]);
         }
     }
 
@@ -18,13 +18,13 @@ int main() {
     {
       for(C=0;C<4;C++)
         {
-           if (vet[L][C] >=12 && (vet[L][C] <= 20))
+           if (mat[L][C] >=12 && (mat[L][C] <= 20))
            {
             qtd++;
           }   
-          if((vet[L][C]) % 2 == 0)
+          if((mat[L][C]) % 2 == 0)
           {
-            valor = valor + vet[L][C];
+            valor = valor + mat[L][C];
             elementos++;
           }
     }
@@ -37,3 +37,4 @@ int main() {
   
     return 0;
 }
+  
