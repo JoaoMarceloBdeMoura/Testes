@@ -7,62 +7,61 @@ int main() {
 
 
  // dias depende de sintomas
-    int idade, sexo, sintomas, ajuda, i;            int qtdM=0, qtdF=0, qtdCS=0, qtdSS=0;
-    int dias, menor=9999, teste, resultado;
+    int idade, sexo, sintomas, ajuda, i;            
+	int qtdMD=0, qtdFD=0, qtdCS=0, qtdSS=0, qtdSS_AJ=0;
+    int dias, menor=0, teste, resultado;
     int internado, qtdIdoso=0;
     float media, mediaD=0;
   
   //inicio do for
   
-    for(i=0;i<3;i++)
+    for(i=0;i<1;i++)
       {
         printf("\n\n------------------------------------------------------------\n\n");
-        printf("\nDigite a idade..: ");
+       do{
+	    printf("\nDigite a idade..: ");
         scanf("%d", &idade);
-        
-    //verificaÁ„o do sexo   
+       }while(idade < 0);
+	    
+    //verifica√ß√£o do sexo   
         do
         {
           printf("\nSexo  1-Masculino  2- Feminino..: ");
-        scanf("%d", &sexo);
-        if(sexo ==1)
-        {
-          qtdM++;
-        }
-        else
-        {
-          qtdF++;
-        }
+        scanf("%d", &sexo);   
         }
         while((sexo != 1) && (sexo != 2));  
-    //fim da verificaÁ„o
+    //fim da verifica√ß√£o
 
 
 
-   //Inicio do question·rio de sintomas
-        printf("\nTeve sintomas do CoronaVirus? 1-Sim 2-N„o..: ");
+   //Inicio do question√°rio de sintomas
+       do{
+	    printf("\nTeve sintomas do CoronaVirus? 1-Sim 2-N√£o..: ");
         scanf("%d", &sintomas);
-
-
+	   }while((sintomas != 1) && (sintomas != 2));
 
        if(sintomas == 1)
         {
+         do{
           printf("\nPor quantos dias teve sintomas?..: ");
           scanf("%d", &dias);
-          printf("\nPrecisou procurar ajuda mÈdica? 1-Sim 2- N„o..: ");
+     	 }while(dias < 0);
+     	
+		do{ 
+		  printf("\nPrecisou procurar ajuda m√©dica? 1-Sim 2- N√£o..: ");
           scanf("%d", &ajuda);
-          
-        //Internados ou n„o
-          if(ajuda == 1)
+      	}while((ajuda != 1) && (ajuda != 2));
+      	
+        //Internados ou n√£o
+          do{
+          	
+		  if(ajuda == 1)
           {
-            printf("\nPrecisou ficar internado? 1-Sim 2- N„o..: ");
+            printf("\nPrecisou ficar internado? 1-Sim 2- N√£o..: ");
             scanf("%d", &internado);
             
           }        
-          else
-          {
-            
-          }
+          }while((ajuda != 1) && (ajuda != 2));
 
 
 
@@ -82,21 +81,23 @@ int main() {
         }
 
 
-
-       printf("\nRealizou algum teste de covid? 1-Sim 2-N„o..: ");
+	   do{
+       printf("\nRealizou algum teste de covid? 1-Sim 2-N√£o..: ");
         scanf("%d", &teste);
-        
+   	   }while((teste != 1) && (teste != 2));
 
 
 
        if(teste == 1)
         {
+         do{
           printf("\nQual foi o resultado? 1- Positivo  2- Negativo..: ");
           scanf("%d", &resultado);            
-        }   
+     	 }while((resultado != 1) && (resultado != 2));
+		}   
 
 
-
+//idade da pessoa mais jovem que testou positivo e que precisou ficar internado. 
        if((resultado == 1) && (internado == 1))
         {
           if(menor > idade)
@@ -104,42 +105,105 @@ int main() {
              menor = idade;
           }
          
-        }
+       	}
       
-      }
+//a quantidade de pessoas que tiveram sintomas e n√£o precisaram procurar ajuda m√©dica.   
+	   if((sintomas == 1) && (ajuda == 2))
+	   	{
+	   		qtdSS_AJ++;
+		}       
+ 
+ //teste teste teste teste
+ 
+ 		if(sexo == 1)
+ 		{
+ 			qtdMD = qtdMD + dias;
+		}
+		else
+		{
+			qtdFD = qtdFD + dias;
+		}
+
+       
+      	}
+      	    	
+
+
 printf("\n\n------------------------ Resultados ------------------------\n\n");
   //respondendo perguntas
 
 
 
-   //percentual de pessoas assintom·ticas
+   //percentual de pessoas assintom√°ticas
 
 
 
    media = (qtdSS * 100)/i;
     
+    if(qtdSS == 0)
+	{
+		printf("A porcentagem de pessoas assintom√°ticas e de: %.2f\n",media);
+		printf("\nN√£o houve pessoas assintomaticas\n");		
+	}
+	else
+	{
+		printf("A porcentagem de pessoas assintom√°ticas e de: %.2f\n",media);
+	}  
     
-    
-    
-    printf("A porcentagem de pessoas assintom·ticas È de: %.2f",media);
         
-    //mÈdia de dias com sintomas das pessoas idosas
+    //m√©dia de dias com sintomas das pessoas idosas
+    
     
     if(qtdIdoso <= 0)
     {
-      printf("\nN„o houve pessoas idosas com sintomas");
+      printf("\nNao houve pessoas idosas com sintomas\n");
     }
      else
     {
-      printf("\nA mÈdia de dias com sintomas das pessoas idosas È de: %.2f", mediaD/qtdIdoso);
+      printf("\nA media de dias com sintomas das pessoas idosas e de: %.2f\n", mediaD/qtdIdoso);
     }
+    
     
     //idade da pessoa mais jovem que testou positivo e que precisou ficar internado.
 
+	if(menor == 0)
+	{
+		printf("\nNao houve uma pessoa que testou positivo e que precisou ficar internado\n");
+	}
+	else
+	{
+		printf("\nA idade da pessoa mais jovem que testou positivo e que precisou ficar internado e de: %d\n", menor);
+	}
 
-
-   printf("\nA idade da pessoa mais jovem que testou positivo e que precisou ficar internado È de: %d", menor);
-    
+   
+   
+   //quantidade de pessoas que tiveram sintomas e n√£o precisaram procurar ajuda m√©dica.
+   
+  	if(qtdSS_AJ == 0)
+  	{
+  		printf("\nNao houve uma pessoa que tive sintoma e n√£o precisou procurar ajuda medica\n");
+	}
+    else
+    {
+    	 printf("\nA quantidade de pessoas que tiveram sintomas e n√£o precisaram procurar ajuda medica e..: %d\n", qtdSS_AJ);
+	}
+   
+   // teste teste teste teste teste teste
+   		
+		 if(qtdMD > qtdFD)
+		 {
+		 	printf("\nO grupo que teve mais dias foi o Masculino\n");
+		 }
+		 else if(qtdFD > qtdMD)
+		 {
+		 	printf("\nO grupo que teve mais dias foi o Feminino\n");
+		 }
+		 else
+		 {
+		 	printf("\nAmbos os grupos tiveram a mesma quantidade de dias\n");
+		 }
   
+	
+
     return 0;
 }
