@@ -1,0 +1,172 @@
+programa {
+	funcao inicio() {
+				// dias depende de sintomas
+    inteiro idade=0, sexo, sintomas, ajuda=0, i            
+    inteiro qtdMD=0, qtdFD=0, qtdCS=0, qtdSS=0, qtdSS_AJ=0
+    inteiro dias=0, menor=99999, teste, resultado=0
+    inteiro internado=0, qtdIdoso=0
+    real media=0, mediaD=0
+  
+  //inicio do for
+  
+    para(i=0;i<3;i++)
+      {
+        escreva("\n\n------------------------------------------------------------\n\n")
+       faca{
+        escreva("\nDigite a idade..: ")
+        leia(idade)
+       }enquanto(idade < 0)
+	
+	//----------------------------------------------------------------------------------------------------
+//verificação do sexo   
+        faca
+        {
+          escreva("\nSexo  1-Masculino  2- Feminino..: ")
+          leia(sexo)  
+        }
+        enquanto(sexo != 1 e sexo != 2) 
+    //fim da verificação
+    //----------------------------------------------------------------------------------------------------
+    //Inicio do questionário de sintomas
+       faca{
+        escreva("\nTeve sintomas do CoronaVirus? 1-Sim 2-Não..: ")
+        leia(sintomas)
+       }enquanto(sintomas != 1 e sintomas != 2)
+       //---------------------------------------------------------------------------------------------------
+      se(sintomas == 1)
+        {
+         faca{
+          escreva("\nPor quantos dias teve sintomas?..: ")
+          leia(dias)
+          }enquanto(dias < 0)
+         
+        faca{
+          escreva("\nPrecisou procurar ajuda médica? 1-Sim 2- Não..: ")
+          leia(ajuda)
+          }enquanto(ajuda != 1 e ajuda != 2)
+          
+        //Internados ou não
+          se(ajuda == 1)
+           {
+                faca{
+                  escreva("\nPrecisou ficar internado? 1-Sim 2- Não..: ")
+                  leia(internado)
+                }enquanto(internado != 1 e internado != 2)      
+          }
+
+
+
+
+
+        se(idade >= 60){
+            mediaD = mediaD + dias
+            qtdIdoso++
+          }
+
+        qtdCS++
+          }
+        senao
+        {
+          qtdSS++
+        }
+    //--------------------------------------------------------------------------------------------------------
+    faca{
+        escreva("\nRealizou algum teste de covid? 1-Sim 2-Não..: ")
+        leia(teste)
+       }enquanto(teste != 1 e teste != 2)
+       //-------------------------------------------------------------------------------------------------------
+       se(teste == 1)
+        {
+         faca{
+          escreva("\nQual foi o resultado? 1- Positivo  2- Negativo..: ")
+          leia(resultado)
+          }enquanto(resultado != 1 e resultado != 2)
+        }
+        //-------------------------------------------------------------------------------------
+        //idade da pessoa mais jovem que testou positivo e que precisou ficar internado.
+       se(resultado == 1 e internado == 1)
+        {
+          se(menor > idade)
+          {
+             menor = idade
+          }
+         
+        }
+        //-------------------------------------------------------------------------------------
+        //a quantidade de pessoas que tiveram sintomas e não precisaram procurar ajuda médica.   
+       se(sintomas == 1 e ajuda == 2)
+           {
+               qtdSS_AJ++
+           }
+           //----------------------------------------------------------------------------
+           //teste teste teste teste
+
+        se(sexo == 1)
+        {
+             qtdMD = qtdMD + dias
+        }
+        senao
+        {
+            qtdFD = qtdFD + dias
+        }
+           
+}      
+
+escreva("\n\n------------------------ Resultados ------------------------\n\n")
+//respondendo perguntas
+  //percentual de pessoas assintomáticas
+  media = (qtdSS * 100)/i
+    
+    escreva("A porcentagem de pessoas assintomáticas e de: \n",media)
+    
+    
+    //média de dias com sintomas das pessoas idosas
+    
+    
+    se(qtdIdoso <= 0)
+    {
+      escreva("\nNao houve pessoas idosas com sintomas\n")
+    }
+     senao
+    {
+      escreva("\nA media de dias com sintomas das pessoas idosas e de: \n", mediaD/qtdIdoso)
+    }
+    
+    
+    //idade da pessoa mais jovem que testou positivo e que precisou ficar internado.
+   se(menor == 0)
+    {
+        escreva("\nNao houve uma pessoa que testou positivo e que precisou ficar internado\n")
+    }
+    senao
+    {
+        escreva("\nA idade da pessoa mais jovem que testou positivo e que precisou ficar internado e de: \n", menor)
+    }
+    
+    
+    //quantidade de pessoas que tiveram sintomas e não precisaram procurar ajuda médica.
+    se(qtdSS_AJ == 0)
+      {
+          escreva("\nNao houve uma pessoa que tive sintoma e não precisou procurar ajuda medica\n")
+    }
+    senao
+    {
+         escreva("\nA quantidade de pessoas que tiveram sintomas e não precisaram procurar ajuda medica e..: \n", qtdSS_AJ)
+    }
+    
+    // teste teste teste teste teste teste
+           
+         se(qtdMD > qtdFD)
+         {
+             escreva("\nO grupo que teve mais dias foi o Masculino\n")
+         }
+         senao se(qtdFD > qtdMD)
+         {
+             escreva("\nO grupo que teve mais dias foi o Feminino\n")
+         }
+         senao
+         {
+             escreva("\nAmbos os grupos tiveram a mesma quantidade de dias\n")
+         }
+    }
+}
