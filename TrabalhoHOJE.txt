@@ -1,0 +1,142 @@
+===============Código de criação das tabelas=============
+create table curso (
+idcurso number,
+nome varchar2(30)
+);
+
+create table aluno (
+idcurso number,
+nome varchar2(30),
+matricula number
+);
+
+create table disciplina (
+idcurso number,
+iddisciplina number,
+nome varchar2(30),
+ementa varchar2(100)
+);
+
+create table matriculado (
+idcurso number,
+iddisciplina number,
+nota number,
+matricula number
+);
+
+create table alunos_turma (
+nome varchar2(30),
+matricula number
+);
+=========================================================
+
+====================Inserindo Curso======================
+
+insert into curso values (3,'Ciência da Computação');
+insert into curso values (6,'Ciências Biológicas');
+insert into curso values (8,'Engenharia da Computação');
+insert into curso values (10,'Farmácia');
+=========================================================
+
+====================Inserindo Aluno======================
+
+insert into aluno values (3,'João',1001);
+insert into aluno values (6,'Ana',1002);
+insert into aluno values (8,'Joana',1003);
+insert into aluno values (8,'Joaninha',1004);
+insert into aluno values (10,'Jô',1005);
+insert into aluno values (10,'Janjão',1006);
+
+=========================================================
+
+====================Inserindo Disciplina=================
+
+insert into disciplina values (3,16,'Construção de Algoritmo','Aprender a construir algoritmos');
+insert into disciplina values (6,22,'Parasitismo','Entender como ocorre o parasitismo');
+insert into disciplina values (8,4,'Desenvolvimento de Softwares','Desenvolver e aprimorar softwares');
+insert into disciplina values (10,23,'Quimica Inorganica','Estudo sobre a quimica inorganica');
+insert into disciplina values (10,21,'Quimica Organica','Estudo sobre a quimica organica');
+=========================================================
+
+====================Inserindo Matriculado================
+
+insert into matriculado values (3,16,7,1001);
+insert into matriculado values (8,4,9.5,1003);
+insert into matriculado values (8,4,5.7,1004);
+=========================================================
+
+===================Inserindo Alunos_turma================
+
+insert into alunos_turma values ('João',1001);
+insert into alunos_turma values ('Ana',1002);
+insert into alunos_turma values ('Joana',1003);
+insert into alunos_turma values ('Joaninha',1004);
+insert into alunos_turma values ('Jô',1005);
+insert into alunos_turma values ('Janjão',1006);
+
+=========================================================
+
+==========================Respostas======================
+
+1- certo
+
+declare
+    v_qtd number;
+begin
+    select count (matricula) into v_qtd from matriculado;
+    dbms_output.put_line(' A quantidade de alunos é ' || v_qtd);
+end;
+
+=========================================================
+
+2- certo
+
+declare
+    v_nota matriculado.nota%type;
+begin
+    select nota into v_nota from matriculado 
+    where matricula = 1001 and idcurso = 3 and iddisciplina = 16;
+    dbms_output.put_line(' A nota do aluno é: ' || v_nota);
+end;
+
+=========================================================
+
+3- certo
+
+declare
+    v_ementa disciplina.ementa%type;
+begin
+    select ementa into v_ementa from disciplina 
+    where iddisciplina = 22 and idcurso = 6;
+    dbms_output.put_line(' Ementa: '|| v_ementa);
+end;
+
+=========================================================
+
+4- certo
+
+declare
+    v_qtd number;
+begin
+    select count (*) into v_qtd from disciplina where idcurso = 10;
+    dbms_output.put_line(' A quantidade de disciplinas é '|| v_qtd);
+end;
+
+=========================================================
+
+5- certo
+
+declare
+    v_media number;
+    v_max number;
+    v_min number;
+begin
+    select max(nota), min(nota), avg(nota) 
+    into v_max, v_min, v_media 
+    from matriculado
+    where iddisciplina = 4 and idcurso = 8;
+    
+    dbms_output.put_line(' A nota máxima é ' || v_max);
+    dbms_output.put_line(' A nota minima é ' || v_min);
+    dbms_output.put_line(' A nota média é ' || v_media);
+end;
