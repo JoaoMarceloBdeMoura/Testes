@@ -1,5 +1,5 @@
 https://algoritmosempython.com.br/cursos/algoritmos-python/algoritmos-grafos/busca-profundidade/
-
+pesquisar sobre sistemas especialistas
 
 class No:
     def __init__(self, posicao):
