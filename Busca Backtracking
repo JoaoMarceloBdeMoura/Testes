@@ -1,0 +1,100 @@
+class No:
+    def __init__(self, posicao):
+        self.posicao = posicao
+        self.vizinhoEmbaixo = None
+        self.vizinhoEsquerda = None
+        self.vizinhoEmcima = None
+        self.vizinhoDireita = None
+        self.checado = False
+
+    def buscar_saida(self, no):
+        fila = [no]  # Fila para armazenar os nós a serem explorados
+
+        while fila:
+            no_atual = fila.pop(0)  # Remove o primeiro nó da fila
+
+            if no_atual.posicao == saida:
+                print("Encontrei a saida "+ saida)
+                return True
+
+            no_atual.checado = True
+            print(no_atual.posicao)
+
+            # Adiciona os vizinhos não visitados à fila
+            if no_atual.vizinhoEmbaixo and not no_atual.vizinhoEmbaixo.checado:
+                fila.append(no_atual.vizinhoEmbaixo)
+                print("R1 Indo pra baixo")
+            if no_atual.vizinhoEsquerda and not no_atual.vizinhoEsquerda.checado:
+                fila.append(no_atual.vizinhoEsquerda)
+                print("R2 Esquerda")
+            if no_atual.vizinhoEmcima and not no_atual.vizinhoEmcima.checado:
+                fila.append(no_atual.vizinhoEmcima)
+                print("R3 Indo pra cima")
+            if no_atual.vizinhoDireita and not no_atual.vizinhoDireita.checado:
+                fila.append(no_atual.vizinhoDireita)
+                print("R4 Direita")
+            print("=================================")
+
+            # Pode ficar meio confuso, mas é que ele explora ambos os lados quando
+            # tem mais de um caminho, ele vai na ordem que foi mostrada antes.
+            # Ex:
+            #---------------------------------------------------------------------
+            # B
+            # R1 Indo pra baixo
+            # R4 Direita
+            #
+            # Ele  vai expandir a regra que falou primeiro e depois o outro
+
+        return False
+
+
+# Declarando os nós com suas respectivas posições
+a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t = [No(letra) for letra in "ABCDEFGHIJKLMNOPQRST"]
+
+# Cadastrando os vizinhos de cada nó
+a.vizinhoEmbaixo = b
+b.vizinhoDireita = f
+b.vizinhoEmcima = a
+b.vizinhoEmbaixo = c
+c.vizinhoEmcima = b
+c.vizinhoEmbaixo = d
+d.vizinhoEmcima = c
+d.vizinhoDireita = h
+h.vizinhoEsquerda = d
+h.vizinhoEmcima = g
+g.vizinhoDireita = k
+g.vizinhoEmbaixo = h
+k.vizinhoEsquerda = g
+k.vizinhoEmbaixo = l
+l.vizinhoDireita = p
+l.vizinhoEmcima = k
+p.vizinhoEsquerda = l
+p.vizinhoDireita = t
+p.vizinhoEmcima = o
+o.vizinhoDireita = s
+o.vizinhoEmcima = n
+o.vizinhoEmbaixo = p
+s.vizinhoEsquerda = o
+s.vizinhoEmcima = r
+r.vizinhoEmcima = q
+r.vizinhoEmbaixo = s
+q.vizinhoEsquerda = m
+q.vizinhoEmbaixo = r
+m.vizinhoEsquerda = i
+m.vizinhoDireita = q
+i.vizinhoEsquerda = e
+i.vizinhoDireita = m
+i.vizinhoEmbaixo = j
+j.vizinhoDireita = n
+j.vizinhoEmcima = i
+n.vizinhoEsquerda = j
+n.vizinhoEmbaixo = o
+e.vizinhoDireita = i
+e.vizinhoEmbaixo = f
+f.vizinhoEmcima = e
+f.vizinhoEsquerda = b
+t.vizinhoEsquerda = p
+
+saida = 'S'
+
+a.buscar_saida(a)
