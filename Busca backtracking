@@ -17,15 +17,19 @@ class No:
 
         # Verifica se é possível ir para os vizinhos não visitados
         if no.vizinhoEmbaixo and not no.vizinhoEmbaixo.checado:
+            print("========")
             if self.buscar_saida(no.vizinhoEmbaixo):
                 return True
         if no.vizinhoEsquerda and not no.vizinhoEsquerda.checado:
+            print("========")
             if self.buscar_saida(no.vizinhoEsquerda):
                 return True
         if no.vizinhoEmcima and not no.vizinhoEmcima.checado:
+            print("========")
             if self.buscar_saida(no.vizinhoEmcima):
                 return True
         if no.vizinhoDireita and not no.vizinhoDireita.checado:
+            print("========")
             if self.buscar_saida(no.vizinhoDireita):
                 return True
 
