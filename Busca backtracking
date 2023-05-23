@@ -1,0 +1,84 @@
+class No:
+    def __init__(self, posicao):
+        self.posicao = posicao
+        self.vizinhoEmbaixo = None
+        self.vizinhoEsquerda = None
+        self.vizinhoEmcima = None
+        self.vizinhoDireita = None
+        self.checado = False
+
+    def buscar_saida(self, no):
+        if no.posicao == saida:
+            print("Encontrei a saída: " + saida)
+            return True
+
+        no.checado = True
+        print(no.posicao)
+
+        # Verifica se é possível ir para os vizinhos não visitados
+        if no.vizinhoEmbaixo and not no.vizinhoEmbaixo.checado:
+            if self.buscar_saida(no.vizinhoEmbaixo):
+                return True
+        if no.vizinhoEsquerda and not no.vizinhoEsquerda.checado:
+            if self.buscar_saida(no.vizinhoEsquerda):
+                return True
+        if no.vizinhoEmcima and not no.vizinhoEmcima.checado:
+            if self.buscar_saida(no.vizinhoEmcima):
+                return True
+        if no.vizinhoDireita and not no.vizinhoDireita.checado:
+            if self.buscar_saida(no.vizinhoDireita):
+                return True
+
+        return False
+
+
+# Declarando os nós com suas respectivas posições
+a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t = [No(letra) for letra in "ABCDEFGHIJKLMNOPQRST"]
+
+# Cadastrando os vizinhos de cada nó
+a.vizinhoEmbaixo = b
+b.vizinhoDireita = f
+b.vizinhoEmcima = a
+b.vizinhoEmbaixo = c
+c.vizinhoEmcima = b
+c.vizinhoEmbaixo = d
+d.vizinhoEmcima = c
+d.vizinhoDireita = h
+h.vizinhoEsquerda = d
+h.vizinhoEmcima = g
+g.vizinhoDireita = k
+g.vizinhoEmbaixo = h
+k.vizinhoEsquerda = g
+k.vizinhoEmbaixo = l
+l.vizinhoDireita = p
+l.vizinhoEmcima = k
+p.vizinhoEsquerda = l
+p.vizinhoDireita = t
+p.vizinhoEmcima = o
+o.vizinhoDireita = s
+o.vizinhoEmcima = n
+o.vizinhoEmbaixo = p
+s.vizinhoEsquerda = o
+s.vizinhoEmcima = r
+r.vizinhoEmcima = q
+r.vizinhoEmbaixo = s
+q.vizinhoEsquerda = m
+q.vizinhoEmbaixo = r
+m.vizinhoEsquerda = i
+m.vizinhoDireita = q
+i.vizinhoEsquerda = e
+i.vizinhoDireita = m
+i.vizinhoEmbaixo = j
+j.vizinhoDireita = n
+j.vizinhoEmcima = i
+n.vizinhoEsquerda = j
+n.vizinhoEmbaixo = o
+e.vizinhoDireita = i
+e.vizinhoEmbaixo = f
+f.vizinhoEmcima = e
+f.vizinhoEsquerda = b
+t.vizinhoEsquerda = p
+
+saida = 'S'
+
+a.buscar_saida(a)
