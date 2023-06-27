@@ -1,0 +1,112 @@
+from collections import deque
+
+
+class No:
+    def __init__(self, posicao):
+        self.posicao = posicao
+        self.vizinhoBaixo = None
+        self.vizinhoEsquerda = None
+        self.vizinhoCima = None
+        self.vizinhoDireita = None
+        self.checado = False
+        self.custo_real = float('inf')  # Custo real (g)
+
+
+def buscar_saida(no):
+    fila = deque()
+    fila.append((no, [no.posicao]))
+
+    while fila:
+        fila = sorted(fila, key=lambda n: calcular_funcao_avaliacao(n[0]))  # Ordenar por função de avaliação (f)
+        no_atual, caminho = fila.pop(0)
+
+        print('No atual:', no_atual.posicao)
+        print('Caminho percorrido:', ' -> '.join(caminho))
+        print('------------------------------------------------')
+
+        if no_atual.posicao == 'S':
+            caminho_str = ' -> '.join(caminho)
+            print('\n\n\nCaminho percorrido:', caminho_str)
+            print('FIM')
+            return
+
+        no_atual.checado = True
+
+        if no_atual.vizinhoBaixo and not no_atual.vizinhoBaixo.checado:
+            fila.append((no_atual.vizinhoBaixo, caminho + [no_atual.vizinhoBaixo.posicao]))
+
+        if no_atual.vizinhoEsquerda and not no_atual.vizinhoEsquerda.checado:
+            fila.append((no_atual.vizinhoEsquerda, caminho + [no_atual.vizinhoEsquerda.posicao]))
+
+        if no_atual.vizinhoCima and not no_atual.vizinhoCima.checado:
+            fila.append((no_atual.vizinhoCima, caminho + [no_atual.vizinhoCima.posicao]))
+
+        if no_atual.vizinhoDireita and not no_atual.vizinhoDireita.checado:
+            fila.append((no_atual.vizinhoDireita, caminho + [no_atual.vizinhoDireita.posicao]))
+
+
+def calcular_heuristica(no):
+    valores_heuristicos = {
+        'A': 52, 'B': 50, 'C': 48, 'D': 35, 'E': 36, 'F': 40, 'G': 30,
+        'H': 31, 'I': 29, 'J': 27, 'K': 25, 'L': 20, 'M': 26, 'N': 16,
+        'O': 8, 'P': 12, 'Q': 21, 'R': 16, 'S': 0, 'T': 13
+    }
+    return valores_heuristicos[no.posicao]
+
+
+def calcular_funcao_avaliacao(no):
+    return calcular_heuristica(no)
+
+
+# Declarando os nós com suas respectivas posições
+a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t = [No(letra) for letra in 'ABCDEFGHIJKLMNOPQRST']
+
+# Cadastrando os vizinhos de cada nó
+a.vizinhoBaixo = b
+b.vizinhoCima = a
+b.vizinhoDireita = f
+b.vizinhoBaixo = c
+c.vizinhoCima = b
+c.vizinhoBaixo = d
+d.vizinhoCima = c
+d.vizinhoDireita = h
+e.vizinhoDireita = i
+e.vizinhoBaixo = f
+f.vizinhoEsquerda = b
+f.vizinhoCima = e
+g.vizinhoDireita = k
+g.vizinhoBaixo = h
+h.vizinhoEsquerda = d
+h.vizinhoCima = g
+h.vizinhoDireita = l
+i.vizinhoEsquerda = e
+i.vizinhoBaixo = j
+i.vizinhoDireita = m
+j.vizinhoCima = i
+j.vizinhoDireita = n
+k.vizinhoEsquerda = g
+k.vizinhoBaixo = l
+l.vizinhoCima = k
+l.vizinhoDireita = p
+l.vizinhoBaixo = o
+m.vizinhoEsquerda = i
+m.vizinhoBaixo = q
+n.vizinhoEsquerda = j
+n.vizinhoBaixo = o
+o.vizinhoCima = n
+o.vizinhoBaixo = s
+o.vizinhoDireita = p
+p.vizinhoEsquerda = l
+p.vizinhoCima = o
+p.vizinhoDireita = t
+q.vizinhoEsquerda = m
+q.vizinhoDireita = r
+r.vizinhoEsquerda = q
+r.vizinhoBaixo = s
+s.vizinhoCima = r
+s.vizinhoBaixo = o
+s.vizinhoDireita = t
+t.vizinhoEsquerda = p
+
+# Chamando a função para buscar a saída
+buscar_saida(a)
