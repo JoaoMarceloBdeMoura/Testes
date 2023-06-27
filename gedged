@@ -45,69 +45,69 @@ def buscar_saida_A_star(no_inicial, no_objetivo):
 def obter_vizinhos_validos(no):
     vizinhos = []
     
-    # Regra 1: Baixo
+    
     if no.posicao == 'A':
-        vizinhos.append((b, 2))
+        vizinhos.append((b, 2))#baixo
     elif no.posicao == 'B':
-        vizinhos.append((a, 2))
-        vizinhos.append((c, 6))
-        vizinhos.append((f, 10))
+        vizinhos.append((c, 6))#baixo
+        vizinhos.append((a, 2))#cima
+        vizinhos.append((f, 10))#direita
     elif no.posicao == 'C':
-        vizinhos.append((b, 6))
-        vizinhos.append((d, 12))
+        vizinhos.append((d, 12))#baixo
+        vizinhos.append((b, 6))#cima
     elif no.posicao == 'D':
-        vizinhos.append((c, 12))
-        vizinhos.append((h, 5))
+        vizinhos.append((c, 12))#cima
+        vizinhos.append((h, 5))#direita
     elif no.posicao == 'E':
-        vizinhos.append((i, 7))
-        vizinhos.append((f, 5))
+        vizinhos.append((f, 5))#baixo
+        vizinhos.append((i, 7))#direita
     elif no.posicao == 'F':
-        vizinhos.append((b, 1))
-        vizinhos.append((e, 5))
+        vizinhos.append((b, 1))#esquerda
+        vizinhos.append((e, 5))#cima
     elif no.posicao == 'G':
-        vizinhos.append((h, 1))
-        vizinhos.append((k, 3))
+        vizinhos.append((h, 1))#baixo
+        vizinhos.append((k, 3))#direita
     elif no.posicao == 'H':
-        vizinhos.append((d, 5))
-        vizinhos.append((g, 1))
+        vizinhos.append((d, 5))#esquerda
+        vizinhos.append((g, 1))#cima
     elif no.posicao == 'I':
-        vizinhos.append((e, 7))
-        vizinhos.append((j, 9))
-        vizinhos.append((m, 3))
+        vizinhos.append((j, 9))#baixo
+        vizinhos.append((e, 7))#esquerda
+        vizinhos.append((m, 3))#direita
     elif no.posicao == 'J':
-        vizinhos.append((i, 9))
-        vizinhos.append((n, 11))
+        vizinhos.append((i, 9))#cima
+        vizinhos.append((n, 11))#direita
     elif no.posicao == 'K':
-        vizinhos.append((g, 3))
-        vizinhos.append((l, 8))
+        vizinhos.append((l, 8))#baixo
+        vizinhos.append((g, 3))#esquerda
     elif no.posicao == 'L':
-        vizinhos.append((k, 8))
-        vizinhos.append((p, 8))
+        vizinhos.append((k, 8))#cima
+        vizinhos.append((p, 8))#direita
     elif no.posicao == 'M':
-        vizinhos.append((i, 3))
-        vizinhos.append((q, 5))
+        vizinhos.append((i, 3))#esquerda
+        vizinhos.append((q, 5))#direita
     elif no.posicao == 'N':
-        vizinhos.append((j, 11))
-        vizinhos.append((o, 8))
+        vizinhos.append((o, 8))#baixo
+        vizinhos.append((j, 11))#esquerda
     elif no.posicao == 'O':
-        vizinhos.append((n, 8))
-        vizinhos.append((s, 9))
-        vizinhos.append((p, 4))
+        vizinhos.append((p, 4))#baixo
+        vizinhos.append((n, 8))#cima
+        vizinhos.append((s, 9))#direita
     elif no.posicao == 'P':
-        vizinhos.append((l, 8))
-        vizinhos.append((t, 1))
-        vizinhos.append((o, 4))
+        vizinhos.append((l, 8))#esquerda
+        vizinhos.append((o, 4))#cima
+        vizinhos.append((t, 1))#direita
     elif no.posicao == 'Q':
-        vizinhos.append((m, 5))
-        vizinhos.append((r, 2))
+        vizinhos.append((r, 2))#baixo
+        vizinhos.append((m, 5))#esquerda
     elif no.posicao == 'R':
-        vizinhos.append((q, 2))
-        vizinhos.append((s, 20))
+        vizinhos.append((s, 20))#baixo
+        vizinhos.append((q, 2))#cima
     elif no.posicao == 'S':
-        vizinhos.append((r, 20))
-        vizinhos.append((o, 9))
+        vizinhos.append((o, 9))#esquerda
+        vizinhos.append((r, 20))#cima
     elif no.posicao == 'T':
-        vizinhos.append((p, 1))
+        vizinhos.append((p, 1))#esquerda
         
     return vizinhos
 
