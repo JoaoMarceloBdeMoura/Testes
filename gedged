@@ -1,0 +1,167 @@
+from queue import PriorityQueue
+
+class No:
+    def __init__(self, posicao):
+        self.posicao = posicao
+        self.vizinhos = []
+        self.checado = False
+        self.custo_real = float('inf')  # Custo real (g)
+        self.custo_total = float('inf')  # Custo total (f)
+        self.pai = None
+
+    def __lt__(self, other):
+        return self.custo_total < other.custo_total
+
+
+def buscar_saida_A_star(no_inicial, no_objetivo):
+    fila = PriorityQueue()
+    fila.put(no_inicial)
+    no_inicial.custo_real = 0
+    no_inicial.custo_total = calcular_funcao_avaliacao(no_inicial)
+
+    while not fila.empty():
+        no_atual = fila.get()
+
+        if no_atual == no_objetivo:
+            caminho_str = obter_caminho_percorrido(no_atual)
+            print('\n\n\nCaminho percorrido:', caminho_str)
+            print('FIM')
+            return
+
+        no_atual.checado = True
+
+        vizinhos = obter_vizinhos_validos(no_atual)
+        for vizinho, custo_caminho in vizinhos:
+            novo_custo = no_atual.custo_real + custo_caminho
+            if novo_custo < vizinho.custo_real:
+                vizinho.custo_real = novo_custo
+                vizinho.custo_total = novo_custo + calcular_heuristica(vizinho)
+                vizinho.checado = False
+                vizinho.pai = no_atual
+                fila.put(vizinho)
+                print("Heurística + Custo do caminho para o nó", vizinho.posicao, "=", vizinho.custo_total)
+
+
+def obter_vizinhos_validos(no):
+    vizinhos = []
+    
+    # Regra 1: Baixo
+    if no.posicao == 'A':
+        vizinhos.append((b, 2))
+    elif no.posicao == 'B':
+        vizinhos.append((a, 2))
+        vizinhos.append((c, 6))
+        vizinhos.append((f, 10))
+    elif no.posicao == 'C':
+        vizinhos.append((b, 6))
+        vizinhos.append((d, 12))
+    elif no.posicao == 'D':
+        vizinhos.append((c, 12))
+        vizinhos.append((h, 5))
+    elif no.posicao == 'E':
+        vizinhos.append((i, 7))
+        vizinhos.append((f, 5))
+    elif no.posicao == 'F':
+        vizinhos.append((b, 1))
+        vizinhos.append((e, 5))
+    elif no.posicao == 'G':
+        vizinhos.append((h, 1))
+        vizinhos.append((k, 3))
+    elif no.posicao == 'H':
+        vizinhos.append((d, 5))
+        vizinhos.append((g, 1))
+    elif no.posicao == 'I':
+        vizinhos.append((e, 7))
+        vizinhos.append((j, 9))
+        vizinhos.append((m, 3))
+    elif no.posicao == 'J':
+        vizinhos.append((i, 9))
+        vizinhos.append((n, 11))
+    elif no.posicao == 'K':
+        vizinhos.append((g, 3))
+        vizinhos.append((l, 8))
+    elif no.posicao == 'L':
+        vizinhos.append((k, 8))
+        vizinhos.append((p, 8))
+    elif no.posicao == 'M':
+        vizinhos.append((i, 3))
+        vizinhos.append((q, 5))
+    elif no.posicao == 'N':
+        vizinhos.append((j, 11))
+        vizinhos.append((o, 8))
+    elif no.posicao == 'O':
+        vizinhos.append((n, 8))
+        vizinhos.append((s, 9))
+        vizinhos.append((p, 4))
+    elif no.posicao == 'P':
+        vizinhos.append((l, 8))
+        vizinhos.append((t, 1))
+        vizinhos.append((o, 4))
+    elif no.posicao == 'Q':
+        vizinhos.append((m, 5))
+        vizinhos.append((r, 2))
+    elif no.posicao == 'R':
+        vizinhos.append((q, 2))
+        vizinhos.append((s, 20))
+    elif no.posicao == 'S':
+        vizinhos.append((r, 20))
+        vizinhos.append((o, 9))
+    elif no.posicao == 'T':
+        vizinhos.append((p, 1))
+        
+    return vizinhos
+
+
+def obter_caminho_percorrido(no):
+    caminho = []
+    while no:
+        caminho.append(no.posicao)
+        no = no.pai
+    return ' -> '.join(caminho[::-1])
+
+
+def calcular_heuristica(no):
+    valores_heuristicos = {
+        'A': 52, 'B': 50, 'C': 48, 'D': 35, 'E': 36, 'F': 40, 'G': 30,
+        'H': 31, 'I': 29, 'J': 27, 'K': 25, 'L': 20, 'M': 26, 'N': 16,
+        'O': 8, 'P': 12, 'Q': 21, 'R': 16, 'S': 0, 'T': 13
+    }
+    return valores_heuristicos[no.posicao]
+
+
+def calcular_funcao_avaliacao(no):
+    return no.custo_total
+
+
+# Declarando os nós com suas respectivas posições
+a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t = [No(letra) for letra in 'ABCDEFGHIJKLMNOPQRST']
+
+# Cadastrando os vizinhos de cada nó
+a.vizinhos = [(b, 2)]
+b.vizinhos = [(a, 2), (c, 8), (f, 2)]
+c.vizinhos = [(b, 8), (d, 8)]
+d.vizinhos = [(c, 8), (h, 4)]
+e.vizinhos = [(i, 7), (f, 2)]
+f.vizinhos = [(b, 2), (e, 2)]
+g.vizinhos = [(k, 3), (h, 1)]
+h.vizinhos = [(d, 4), (g, 1)]
+i.vizinhos = [(e, 7), (j, 9), (m, 3)]
+j.vizinhos = [(i, 9), (n, 11)]
+k.vizinhos = [(g, 3), (l, 8)]
+l.vizinhos = [(k, 8), (p, 8)]
+m.vizinhos = [(i, 3), (q, 5)]
+n.vizinhos = [(j, 11), (o, 8)]
+o.vizinhos = [(n, 8), (s, 9), (p, 4)]
+p.vizinhos = [(l, 8), (t, 1), (o, 4)]
+q.vizinhos = [(m, 5), (r, 2)]
+r.vizinhos = [(q, 2), (s, 20)]
+s.vizinhos = [(r, 20), (o, 9)]
+t.vizinhos = [(p, 1)]
+
+# Definindo o nó inicial e o nó objetivo
+no_inicial = a
+no_objetivo = s
+
+# Chamando a função de busca
+buscar_saida_A_star(no_inicial, no_objetivo)
+
