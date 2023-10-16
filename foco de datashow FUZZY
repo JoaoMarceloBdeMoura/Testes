@@ -1,0 +1,160 @@
+import numpy as np
+import skfuzzy as fuzz
+from skfuzzy import control as ctrl
+import matplotlib.pyplot as plt
+
+nitidez = ctrl.Antecedent(np.arange(0, 11, 1), 'nitidez')
+distancia = ctrl.Antecedent(np.arange(0, 21, 1), 'distancia')
+
+
+nitidez['baixa'] = fuzz.trimf(nitidez.universe, [0, 0, 5])
+nitidez['média'] = fuzz.trimf(nitidez.universe, [0, 5, 10])
+nitidez['alta'] = fuzz.trimf(nitidez.universe, [5, 10, 10])
+
+distancia['próxima'] = fuzz.trimf(distancia.universe, [0, 0, 10])
+distancia['média'] = fuzz.trimf(distancia.universe, [0, 10, 20])
+distancia['distante'] = fuzz.trimf(distancia.universe, [10, 20, 20])
+
+foco = ctrl.Consequent(np.arange(0, 11, 1), 'foco')
+
+foco['baixo'] = fuzz.trimf(foco.universe, [0, 0, 5])
+foco['médio'] = fuzz.trimf(foco.universe, [0, 5, 10])
+foco['alto'] = fuzz.trimf(foco.universe, [5, 10, 10])
+
+r1 = ctrl.Rule(nitidez['baixa'] & distancia['próxima'], foco['baixo'])
+r2 = ctrl.Rule(nitidez['baixa'] & distancia['média'], foco['médio'])
+r3 = ctrl.Rule(nitidez['baixa'] & distancia['distante'], foco['alto'])
+r4 = ctrl.Rule(nitidez['média'] & distancia['próxima'], foco['baixo'])
+r5 = ctrl.Rule(nitidez['média'] & distancia['média'], foco['médio'])
+r6 = ctrl.Rule(nitidez['média'] & distancia['distante'], foco['alto'])
+
+
+
+
+sistema_fuzzy = ctrl.ControlSystem([r1, r2, r3, r4, r5, r6])
+
+simulador = ctrl.ControlSystemSimulation(sistema_fuzzy)
+
+
+nitidez_anterior = nitidez_valor = 0
+
+while True:
+    #valores das entradas
+
+    while True:
+        print('=================================')
+        nitidez_valor = float(input('(baixa) 0-1-(...)-9-10 (alta) \nEscreva a nitidez:'))
+        simulador.input['nitidez'] = nitidez_valor
+        if nitidez_valor < 1 or nitidez_valor >10:
+            print('Valor inválido')
+        else:
+            while True:
+                print('=================================')
+                distancia_valor = float(input('(próxima) 0-1-(...)-19-20 (distante) \nEscreva a distância:'))
+                simulador.input['distancia'] = distancia_valor
+                if distancia_valor > 20:
+                    print('Aproxime o aparelho')
+                elif distancia_valor < 1:
+                    print('Distancie o aparelho')
+                else:
+                    break
+            break
+    if nitidez_valor == 10:
+        print('=================================')
+        print('A nitidez está ótima')
+        break
+
+    simulador.compute()
+
+    #valor de saída
+    valor_de_foco = simulador.output['foco']
+
+    print('=================================')
+    print("Valor de Foco do Datashow:", valor_de_foco)
+
+    if nitidez_valor >= 7:
+        print('O foco está bom :)')
+        print('=================================\n')
+        break
+    elif valor_de_foco >= 6.5:
+        print('Aumente um pouco o foco')
+        print('=================================\n')
+    elif 3.5 < valor_de_foco < 6.5:
+        if nitidez_valor > nitidez_anterior:
+            print('Aumente o foco para melhorar a nitidez')
+        elif nitidez_valor < nitidez_anterior:
+            print('Diminua o foco para melhorar a nitidez')
+        else:
+            print('Aumente ou diminua um pouco o foco')
+        print('=================================\n')
+    elif valor_de_foco <= 3.5:
+        print('Diminua um pouco o foco')
+        print('=================================\n')
+
+    nitidez_anterior = nitidez_valor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ...
+plt.figure(figsize=(12, 4))  # Defina o tamanho da figura
+
+# Gráfico para nitidez
+plt.subplot(131)
+plt.plot(nitidez.universe, fuzz.trimf(nitidez.universe, [0, 0, 5]), 'b', linewidth=2, label='Baixa')
+plt.plot(nitidez.universe, fuzz.trimf(nitidez.universe, [0, 5, 10]), 'g', linewidth=2, label='Média')
+plt.plot(nitidez.universe, fuzz.trimf(nitidez.universe, [5, 10, 10]), 'r', linewidth=2, label='Alta')
+plt.title('Função de Associação Fuzzy para Nitidez')
+plt.ylabel('Pertinência')
+plt.xlabel('Nitidez')
+plt.legend()
+plt.grid(True)  # Adicione uma grade
+
+# Gráfico para distância
+plt.subplot(132)
+plt.plot(distancia.universe, fuzz.trimf(distancia.universe, [0, 0, 10]), 'b', linewidth=2, label='Próxima')
+plt.plot(distancia.universe, fuzz.trimf(distancia.universe, [0, 10, 20]), 'g', linewidth=2, label='Média')
+plt.plot(distancia.universe, fuzz.trimf(distancia.universe, [10, 20, 20]), 'r', linewidth=2, label='Distante')
+plt.title('Função de Associação Fuzzy para Distância')
+plt.ylabel('Pertinência')
+plt.xlabel('Distância')
+plt.legend()
+plt.grid(True)
+
+# Gráfico para foco
+plt.subplot(133)
+plt.plot(foco.universe, fuzz.trimf(foco.universe, [0, 0, 5]), 'b', linewidth=2, label='Baixo')
+plt.plot(foco.universe, fuzz.trimf(foco.universe, [0, 5, 10]), 'g', linewidth=2, label='Médio')
+plt.plot(foco.universe, fuzz.trimf(foco.universe, [5, 10, 10]), 'r', linewidth=2, label='Alto')
+plt.title('Função de Associação Fuzzy para Foco')
+plt.ylabel('Pertinência')
+plt.xlabel('Foco')
+plt.legend()
+plt.grid(True)
+
+plt.tight_layout()  # Evite sobreposição de rótulos
+plt.show()
+
+
