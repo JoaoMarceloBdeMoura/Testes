@@ -1,0 +1,60 @@
+import random
+
+tamanho_populacao = 50
+taxa_mutacao = 0.1
+geracoes = 100
+objetivo = 0
+
+distancia = 1
+min_foco = 1  # Valor mínimo de foco
+max_foco = 10  # Valor máximo de foco
+
+
+
+def avaliar(foco):
+    nitidez = abs(distancia - foco)  # Exemplo simples de função de avaliação
+    return nitidez
+
+
+
+
+populacao = [random.uniform(min_foco, max_foco) for _ in range(tamanho_populacao)]
+
+
+
+
+# ged
+
+
+
+for geracao in range(geracoes):
+    # aptidão de cada indivíduo
+    aptidoes = [avaliar(foco) for foco in populacao]
+
+    # melhor nitidez gedgedgedged
+    melhor_individuo = populacao[aptidoes.index(min(aptidoes))]
+    melhor_nitidez = min(aptidoes)
+
+
+
+    print(f"Geração {geracao}: Foco={melhor_individuo}, Nitidez={melhor_nitidez}")
+
+
+
+
+    # verificar o objetivo concluidoged
+    #if melhor_nitidez <= objetivo:
+     #   print(f"Objetivo atingido na geração {geracao}")
+      #  break
+
+
+
+
+    # mutação foco
+    for i in range(len(populacao)):
+        if random.random() < taxa_mutacao:
+            populacao[i] = random.uniform(min_foco, max_foco)
+
+
+print(f"Melhor solução: Distância={distancia}, Foco={melhor_individuo}, Nitidez={melhor_nitidez}")
+
